@@ -5,16 +5,23 @@ const resultelement = document.getElementById("result");
 function calculateAge() {
   const birthdayValue = birthdayelement.value;
   if (birthdayValue === "") {
-    alert("Please enter your birthday");
+    resultelement.innerHTML = `Please enter your birthday`;
   } else {
-    const age = getAge(birthdayValue, 2022);
+    const birthdayDate = new Date(birthdayValue);
+    const currentDate = new Date();
+
+    if (birthdayDate > currentDate) {
+      resultelement.innerHTML = `Please enter a valid birthday`
+      return;
+    }
+
+    const age = getAge(birthdayDate);
     resultelement.innerText = `Your age is ${age} ${age > 1 ? "years" : "year"} old`;
   }
 }
 
-function getAge(birthdayValue, referenceYear) {
-  const currentDate = new Date(referenceYear, 0);
-  const birthdayDate = new Date(birthdayValue);
+function getAge(birthdayDate) {
+  const currentDate = new Date();
   let age = currentDate.getFullYear() - birthdayDate.getFullYear();
   const month = currentDate.getMonth() - birthdayDate.getMonth();
 
